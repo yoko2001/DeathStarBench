@@ -13,6 +13,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   frontend:
     configs:
@@ -25,16 +26,17 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./frontend
+    entrypoint: frontend
     ports:
       - "5000:5000"
     depends_on:
       - consul
     restart: always
     deploy:
-      replicas: 3
+      replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   profile:
     configs:
@@ -47,7 +49,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./profile
+    entrypoint: profile
     depends_on:
       - mongodb-profile
       - memcached-profile
@@ -57,6 +59,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   search:
     configs:
@@ -69,7 +72,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./search
+    entrypoint: search
     depends_on:
       - consul
     restart: always
@@ -77,6 +80,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   geo:
     configs:
@@ -89,7 +93,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./geo
+    entrypoint: geo
     depends_on:
       - mongodb-geo
       - consul
@@ -98,6 +102,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   rate:
     configs:
@@ -110,7 +115,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./rate
+    entrypoint: rate
     depends_on:
       - mongodb-rate
       - memcached-rate
@@ -120,6 +125,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   review:
     environment:
@@ -137,6 +143,7 @@ services:
       - memcached-review
       - consul
     restart: always
+    cgroup_parent: hotel_reservation.slice
   
   attractions:
     environment:
@@ -153,6 +160,7 @@ services:
       - mongodb-attractions
       - consul
     restart: always
+    cgroup_parent: hotel_reservation.slice
 
   recommendation:
     configs:
@@ -165,7 +173,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./recommendation
+    entrypoint: recommendation
     depends_on:
       - mongodb-recommendation
       - consul
@@ -174,6 +182,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   user:
     configs:
@@ -186,7 +195,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./user
+    entrypoint: user
     depends_on:
       - mongodb-user
       - consul
@@ -195,6 +204,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   reservation:
     configs:
@@ -207,7 +217,7 @@ services:
       - LOG_LEVEL
     build: .
     image: deathstarbench/hotel-reservation:latest
-    entrypoint: ./reservation
+    entrypoint: reservation
     depends_on:
       - mongodb-reservation
       - memcached-reserve
@@ -217,6 +227,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -234,6 +245,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   memcached-rate:
     image: memcached:latest
@@ -249,6 +261,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   memcached-review:
     image: memcached
@@ -261,6 +274,7 @@ services:
     logging:
       options:
         max-size: 50m
+    cgroup_parent: hotel_reservation.slice
 
   memcached-profile:
     image: memcached:latest
@@ -276,6 +290,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   memcached-reserve:
     image: memcached:latest
@@ -291,6 +306,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-geo:
     image: mongo:5.0
@@ -302,6 +318,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-profile:
     image: mongo:5.0
@@ -313,6 +330,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-rate:
     image: mongo:5.0
@@ -324,6 +342,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-review:
     image: mongo:5.0
@@ -335,6 +354,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-attractions:
     image: mongo:5.0
@@ -346,6 +366,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-recommendation:
     image: mongo:5.0
@@ -357,6 +378,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-reservation:
     image: mongo:5.0
@@ -368,6 +390,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
   mongodb-user:
     image: mongo:5.0
@@ -379,6 +402,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+    cgroup_parent: hotel_reservation.slice
 
 volumes:
   geo:
