@@ -35,6 +35,5 @@ echo "adding to cgroup"
 echo "adding complete"
 docker-compose --compatibility up -d 
 
-# docker run -d -p 8300:8300 -p 8400:8400 -p 8500:8500 -p 8600:53/udp --restart=always --cgroup-parent=hotel_reservation.slice --name=consul hashicorp/consul:latest
 # docker run -d --name=frontend --config source=server_config,target=/config.json -e TLS -e GC -e JAEGER_SAMPLE_RATIO -e LOG_LEVEL  -p 5000:5000 --restart=always --cgroup-parent=hotel_reservation.slice deathstarbench/hotel-reservation:latest frontend
 sudo cat /sys/fs/cgroup/yuri/${CGROUPNAME}/cgroup.procs
